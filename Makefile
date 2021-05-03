@@ -6,14 +6,16 @@
 #    By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/17 18:05:40 by kyuwonlee         #+#    #+#              #
-#    Updated: 2021/04/30 23:22:03 by kyuwonlee        ###   ########.fr        #
+#    Updated: 2021/05/02 15:17:04 by kyuwonlee        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	a.out
-SRCS	=	main.c
+SRCS	=	cub3d.c
 CC		=	clang
-CFLAGS	=	-Wall -Werror -Wextra
+HEAD	=	cub3d.h \
+			key_press.h
+CFLAGS	=	-Wall -Werror -Wextra -I .
 CLIB	=	-lmlx -framework OpenGL -framework Appkit -Imlx
 
 OBJS	= $(SRCS:.c=.o)
