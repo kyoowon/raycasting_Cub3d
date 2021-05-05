@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 16:06:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/05 15:16:01 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/05 15:25:23 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	main(void)
 	init_map(&info);
 	init_window(&info);
 	init_texture(&info);
-	draw_texture(&info);
-		// load_texture(&info);
+	// draw_texture(&info);
+	load_texture(&info);
 	mlx_loop_hook(info.mlx, &main_loop, &info);
 	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
 	mlx_loop(info.mlx);
