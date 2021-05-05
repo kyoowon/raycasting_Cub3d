@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/01 00:27:52 by kyuwonlee        ###   ########.fr       */
+/*   Created: 2020/10/06 20:20:36 by kyulee            #+#    #+#             */
+/*   Updated: 2020/11/02 17:03:04 by kyulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx/mlx.h>
+/*
+** factor - c: char, fd: file deciptor.
+** return - void.
+** function - write a char to the file deciptor.
+*/
 
-int main(void)
+#include "libft.h"
+
+void	ft_putchar_fd(char c, int fd)
 {
-    void *info;
-    
-    info = mlx_init();
-    return(0);
+	if (fd < 0)
+		return ;
+	write(fd, &c, 1);
 }
