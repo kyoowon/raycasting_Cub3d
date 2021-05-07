@@ -6,15 +6,15 @@
 #    By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/17 18:05:40 by kyuwonlee         #+#    #+#              #
-#    Updated: 2021/05/05 00:22:58 by kyuwonlee        ###   ########.fr        #
+#    Updated: 2021/05/07 19:05:02 by kyuwonlee        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	a.cub
-SRCS	=	cub3d.c \
-			drawing.c \
-			hook.c \
-			parsing.c
+SRCS	=	ft_cub3d.c \
+			ft_drawing.c \
+			ft_hook.c \
+			ft_parsing.c
 CC		=	clang
 HEAD	= 	./include
 CFLAGS	=	-Wall -Werror -Wextra

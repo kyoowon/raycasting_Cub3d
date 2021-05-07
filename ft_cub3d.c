@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 16:06:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/05 15:25:23 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/06 22:02:39 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	main_loop(t_info *info)
 {
 	info->img.img = mlx_new_image(info->mlx, info->width, info->height);
 	info->img.data = (int *)mlx_get_data_addr(info->img.img, &info->img.bpp, &info->img.size_l, &info->img.endian);
-
 	calc(info);
 	draw(info);
 	return (0);
@@ -32,12 +31,12 @@ void init_info(t_info *info)
 	info->dirY = 0;
 	info->planeX = 0;
 	info->planeY = 0.66;
-	info->moveSpeed = 0.05;
-	info->rotSpeed = 0.05;
-	info->mapwidth = 24;
-	info->mapheight = 24;
-	info->texwidth = 64;
-	info->texheight = 64;
+	info->moveSpeed = 0.1;
+	info->rotSpeed = 0.1;
+	info->map.mapwidth = 24;
+	info->map.mapheight = 24;
+	info->texture.texwidth = 64;
+	info->texture.texheight = 64;
 }
 
 void init_map(t_info *info)
@@ -68,7 +67,7 @@ void init_map(t_info *info)
 	{4,0,0,0,0,0,0,0,0,4,6,0,6,2,0,0,0,0,0,2,0,0,0,2},
 	{4,4,4,4,4,4,4,4,4,4,1,1,1,2,2,2,2,2,2,3,3,3,3,3}
 	};
-	memcpy(info->map, worldMap, sizeof(int) * info->mapwidth * info->mapheight);
+	memcpy(info->map.map, worldMap, sizeof(int) * info->map.mapwidth * info->map.mapheight);
 }
 
 void	init_window(t_info *info)
