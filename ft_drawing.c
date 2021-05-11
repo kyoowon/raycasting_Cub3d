@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   drawing.c                                          :+:      :+:    :+:   */
+/*   ft_drawing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:53:33 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/06 21:58:49 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/11 17:39:15 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,17 @@ int init_texture(t_info *info)
 		}
 		i++;
 	}
-	if (!(info->texture.texture = (int **)malloc(sizeof(int *) * 8)))
+	if (!(info->texture.texture = (int **)malloc(sizeof(int *) * 11)))
 		return (-1);
 	i = 0;
-	while (i < 8)
+	while (i < 11)
 	{
 		if (!(info->texture.texture[i] = (int *)malloc(sizeof(int) * (info->texture.texheight * info->texture.texwidth))))
 			return (-1);
 		i++;
 	}
 	i = 0;
-	while (i < 8)
+	while (i < 11)
 	{
 		j = 0;
 		while (j < info->texture.texheight * info->texture.texwidth)
@@ -132,6 +132,7 @@ void	draw_texture(t_info *info)
 		x++;
 	}
 }
+
 void	load_image(t_info *info, int *texture, char *path, t_img *img)
 {
 	int x;
@@ -164,4 +165,7 @@ void	load_texture(t_info *info)
 	load_image(info, info->texture.texture[5], "textures/mossy.xpm", &img);
 	load_image(info, info->texture.texture[6], "textures/wood.xpm", &img);
 	load_image(info, info->texture.texture[7], "textures/colorstone.xpm", &img);
+	load_image(info, info->texture.texture[8], "textures/barrel.xpm", &img);
+	load_image(info, info->texture.texture[9], "textures/pillar.xpm", &img);
+	load_image(info, info->texture.texture[10], "textures/greenlight.xpm", &img);
 }

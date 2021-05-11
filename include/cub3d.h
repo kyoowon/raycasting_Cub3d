@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/06 22:07:27 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/11 17:44:24 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
 # define numSprites 19
-
+# define uDiv 1
+# define vDiv 1
+# define vMove 0.0
 
 typedef struct	s_img
 {
@@ -85,6 +87,12 @@ typedef struct	s_map
 	int			map[MAPWIDTH][MAPHEIGHT];
 }				t_map;
 
+typedef struct	s_sprite
+{
+	double		x;
+	double		y;
+	int			texture;
+}				t_sprite;
 
 typedef struct	s_info
 {
@@ -104,52 +112,21 @@ typedef struct	s_info
 	t_img		img;
 	t_map		map;
 	t_texture	texture;
+	t_sprite	sprite[numSprites];
+	int			spriteOrder[numSprites];
+	double		spriteDistance[numSprites];
+	int key_a;
+	int key_w;
+	int key_s;
+	int key_d;
+	int key_esc;
 }				t_info;
 
-// struct			Sprite
-// {
-// 	double		x;
-// 	double		y;
-// 	int			texture;
-// };
-
-// Sprite	sprite[numSprites] =
-// {
-// 	{20.5, 11.5, 10}, //green light in front of playerstart
-// 	//green lights in every room
-// 	{18.5,4.5, 10},
-// 	{10.0,4.5, 10},
-// 	{10.0,12.5,10},
-// 	{3.5, 6.5, 10},
-// 	{3.5, 20.5,10},
-// 	{3.5, 14.5,10},
-// 	{14.5,20.5,10},
-
-// 	//row of pillars in front of wall: fisheye test
-// 	{18.5, 10.5, 9},
-// 	{18.5, 11.5, 9},
-// 	{18.5, 12.5, 9},
-
-// 	//some barrels around the map
-// 	{21.5, 1.5, 8},
-// 	{15.5, 1.5, 8},
-// 	{16.0, 1.8, 8},
-// 	{16.2, 1.2, 8},
-// 	{3.5,  2.5, 8},
-// 	{9.5, 15.5, 8},
-// 	{10.0, 15.1,8},
-// 	{10.5, 15.8,8},
-// };
-
-// typedef struct		s_pair
-// {
-// 	double	first;
-// 	int		second;
-// }					t_pair;
-
-
-// int		spriteOrder[numSprites];
-// double	spriteDistance[numSprites];
+typedef struct	s_pair
+{
+	double	first;
+	int		second;
+}				t_pair;
 
 
 void	calc(t_info *info);
@@ -159,6 +136,8 @@ int		init_texture(t_info *info);
 void	draw_texture(t_info *info);
 void	load_texture(t_info *info);
 void	load_image(t_info *info, int *texture, char *path, t_img *img);
+void	key_update(t_info *info);
 int		key_press(int key, t_info *info);
+int		key_release(int key, t_info *info);
 
 #endif

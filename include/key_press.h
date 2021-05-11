@@ -6,15 +6,16 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/02 15:14:29 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/02 15:15:32 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/11 17:40:43 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEY_PRESS_H
 # define KEY_PRESS_H
 
-#define X_EVENT_KEY_PRESS	2
-#define X_EVENT_KEY_EXIT	17
+# define X_EVENT_KEY_PRESS	2
+# define X_EVENT_KEY_RELEASE 3
+# define X_EVENT_KEY_EXIT	17
 
 # define K_A 0
 # define K_B 11
