@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/10 00:29:51 by kyulee            #+#    #+#             */
-/*   Updated: 2021/05/04 19:50:27 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/17 17:52:31 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,8 @@ void			ft_print_specifier(va_list ap, t_option *tp);
 void			ft_width_precision(va_list ap, t_option *tp, char *fmt);
 char			*ft_parsing_format(va_list ap, t_option *tp, char *format);
 int				ft_printf(const char *format, ...);
+
+void			ft_strexit(char *str);
+
 
 #endif

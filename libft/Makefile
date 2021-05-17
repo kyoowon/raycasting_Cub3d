@@ -57,6 +57,7 @@ PTF=	ft_printf.c\
 		ft_print_str.c\
 		ft_print_nbr.c\
 		ft_print_nbr_utils.c
+
 .c.o : 
 	$(CC) $(CFLAGS) -c $< -o $@
 

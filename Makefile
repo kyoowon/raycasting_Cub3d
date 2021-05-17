@@ -6,36 +6,53 @@
 #    By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/17 18:05:40 by kyuwonlee         #+#    #+#              #
-#    Updated: 2021/05/07 19:05:02 by kyuwonlee        ###   ########.fr        #
+#    Updated: 2021/05/17 18:06:01 by kyuwonlee        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	a.cub
-SRCS	=	ft_cub3d.c \
-			ft_drawing.c \
-			ft_hook.c \
-			ft_parsing.c
-CC		=	clang
-HEAD	= 	./include
+NAME	=	cub3D
+CC		=	gcc
+INCS	=	-I./srcs -I./libft -I./mlx
 CFLAGS	=	-Wall -Werror -Wextra
-CLIB	=	-lmlx -framework OpenGL -framework Appkit -Imlx
+INCLIB = -Lmlx -lmlx -framework OpenGL -framework Appkit -Llibft -lft
+
+LIBFT_D = ./libft
+LIBFT_A = ./libft/libft.a
+
+ABBR	=	ft_cub3d \
+			ft_drawing \
+			ft_hook \
+			ft_parsing
+
+SRCS = $(addsuffix .c, $(addprefix srcs/, $(ABBR)))
 
 OBJS	= $(SRCS:.c=.o)
-
-.c.o :
-	$(CC) $(CFLAGS) -I ./mlx -I $(HEAD) -c $< -o $@
 
 
 all		: $(NAME)
 
+
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -L ./mlx -L ./libft $(CLIB) $(OBJS) -o $(NAME)
-	install_name_tool -change libmlx.dylib ./mlx/libmlx.dylib $(NAME)
+	make -C $(LIBFT_D)
+	$(CC) $(CFLAGS) $(INCS) -o $(NAME) $(OBJS) $(INCLIB)
 
-clean	:
-	rm -rf $(OBJS)
+bonus: fclean $(B_OBJS)
+	make -C $(LIBFT_D)
+	$(CC) $(CFLAGS) $(INCS) -o $(BONUS) $(B_OBJS) $(INCLIB)
 
-fclean	: clean
-	rm -rf	$(NAME)
+clean:
+	make -C $(LIBFT_D) clean
+	rm -f $(OBJS) $(B_OBJS) *.bmp
 
-re		: fclean all
+fclean: clean
+	rm -f $(NAME) $(BONUS) $(LIBFT_A)
+
+re: fclean all
+
+test: re
+	./$(NAME) cubs/test.cub
+
+save: re
+	./$(NAME) cubs/test.cub --save
+
+.PHONY: bonus all clean fclean bonus re test save
