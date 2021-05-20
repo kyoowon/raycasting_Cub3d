@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 19:23:01 by kyulee            #+#    #+#             */
-/*   Updated: 2020/11/02 17:01:42 by kyulee           ###   ########.fr       */
+/*   Updated: 2021/05/17 18:54:47 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include "libft.h"
 
-static size_t	ft_nbr_len(int nbr)
+size_t			ft_nbr_len(int nbr)
 {
 	size_t	len;
 

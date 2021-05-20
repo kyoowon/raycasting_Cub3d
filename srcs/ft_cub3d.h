@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_cub3d.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/17 17:54:59 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/20 17:42:55 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef FT_CUB3D_H
+# define FT_CUB3D_H
 
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
@@ -29,6 +29,26 @@
 # define uDiv 1
 # define vDiv 1
 # define vMove 0.0
+# define ON 1
+# define OFF 0
+
+# define TITLE "cub3D"
+# define EMPTY_LINE '\0'
+# define EMPTY '0'
+# define WALL '1'
+# define SPRITE '2'
+
+# define NORTH 0
+# define SOUTH 1
+# define EAST 2
+# define WEST 3
+# define SPR 4
+# define FLOOR 5
+# define CEILING 6
+# define MAP_START -1
+
+# define PI 3.1415926535897
+
 
 typedef struct	s_img
 {
@@ -74,8 +94,10 @@ typedef struct	s_floor
 
 typedef struct	s_texture
 {
-	int			**buf;
-	int			**texture;
+	char		*path[6];
+	int			texture[6][TEXWIDTH * TEXHEIGHT];
+	int			floor;
+	int			ceiling;
 	int			texheight;
 	int			texwidth;
 }				t_texture;
@@ -84,7 +106,7 @@ typedef struct	s_map
 {
 	int			mapwidth;
 	int			mapheight;
-	int			map[MAPWIDTH][MAPHEIGHT];
+	char		**map;
 }				t_map;
 
 typedef struct	s_sprite
@@ -94,12 +116,8 @@ typedef struct	s_sprite
 	int			texture;
 }				t_sprite;
 
-typedef struct	s_info
+typedef struct	s_player
 {
-	void		*mlx;
-	void		*win;
-	int			width;
-	int			height;
 	double		posX;
 	double		posY;
 	double		dirX;
@@ -108,18 +126,28 @@ typedef struct	s_info
 	double		planeY;
 	double		moveSpeed;
 	double		rotSpeed;
+	char		dir;
+}				t_player;
+
+typedef struct	s_info
+{
+	void		*mlx;
+	void		*win;
+	int			fd;
+	int			width;
+	int			height;
+	int			num_sprite;
+	int			**buf;
+	char		*line;
 	double		*zBuffer;
+	t_player	player;
 	t_img		img;
 	t_map		map;
 	t_texture	texture;
-	t_sprite	sprite[numSprites];
+	t_sprite	*sprite;
+	t_list		*lstmap;
 	int			spriteOrder[numSprites];
 	double		spriteDistance[numSprites];
-	int key_a;
-	int key_w;
-	int key_s;
-	int key_d;
-	int key_esc;
 }				t_info;
 
 typedef struct	s_pair
@@ -128,16 +156,37 @@ typedef struct	s_pair
 	int		second;
 }				t_pair;
 
+void	init_window(t_info *info);
+void	init_info(t_info *info);
+int		main_loop(t_info *info);
+void	init_map(t_info *info);
 
 void	calc(t_info *info);
-void	verLine(t_info *info, int x, int winy1, int winy2, int mapY, int mapX, int side);
-void	draw(t_info *info);
-int		init_texture(t_info *info);
-void	draw_texture(t_info *info);
+
+int		rearrange_all(t_info *info);
+void	apply_player_orientation(t_info *info);
+void	allocate_buffer(t_info *info);
 void	load_texture(t_info *info);
 void	load_image(t_info *info, int *texture, char *path, t_img *img);
-void	key_update(t_info *info);
+
+
 int		key_press(int key, t_info *info);
-int		key_release(int key, t_info *info);
+
+void	validate_arguments(int argc, char *option, int *save);
+
+void	open_cub(char *file_name, t_info *info);
+void	open_cubfile(t_info *info);
+int		decide_what_to_store(t_info *info, char **tab);
+void	store_resolution(t_info *info, char *width, char *height);
+void	store_texture(t_info *info, char *xpm_path, int flag);
+void	store_color(t_info *info, char *rgb_with_comma, int flag);
+void	validate_info(t_info *info);
+void	read_map(t_info *info, char *line);
+void	allocate_map(t_info *info, t_list *curr);
+void	store_map_as_array(t_info *info, t_list *curr);
+void	create_player(t_info *info, int i, int j);
+void	validate_map(t_info *info);
+void	validate_map_horizontal(char **map, int width, int height);
+void	validate_map_vertical(char **map, int width, int height);
 
 #endif

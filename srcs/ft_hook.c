@@ -6,81 +6,46 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:54:56 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/17 17:51:42 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/19 17:54:43 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "ft_cub3d.h"
 
-void	key_update(t_info *info)
+int			key_press(int key, t_info *info)
 {
-	if (info->key_w)
-	{
-		if (!info->map.map[(int)(info->posX + info->dirX * info->moveSpeed)][(int)(info->posY)])
-			info->posX += info->dirX * info->moveSpeed;
-		if (!info->map.map[(int)(info->posX)][(int)(info->posY + info->dirY * info->moveSpeed)])
-			info->posY += info->dirY * info->moveSpeed;
-	}
-	//move backwards if no wall behind you
-	if (info->key_s)
-	{
-		if (!info->map.map[(int)(info->posX - info->dirX * info->moveSpeed)][(int)(info->posY)])
-			info->posX -= info->dirX * info->moveSpeed;
-		if (!info->map.map[(int)(info->posX)][(int)(info->posY - info->dirY * info->moveSpeed)])
-			info->posY -= info->dirY * info->moveSpeed;
-	}
-	//rotate to the right
-	if (info->key_d)
-	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dirX;
-		info->dirX = info->dirX * cos(-info->rotSpeed) - info->dirY * sin(-info->rotSpeed);
-		info->dirY = oldDirX * sin(-info->rotSpeed) + info->dirY * cos(-info->rotSpeed);
-		double oldPlaneX = info->planeX;
-		info->planeX = info->planeX * cos(-info->rotSpeed) - info->planeY * sin(-info->rotSpeed);
-		info->planeY = oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
-	}
-	//rotate to the left
-	if (info->key_a)
-	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = info->dirX;
-		info->dirX = info->dirX * cos(info->rotSpeed) - info->dirY * sin(info->rotSpeed);
-		info->dirY = oldDirX * sin(info->rotSpeed) + info->dirY * cos(info->rotSpeed);
-		double oldPlaneX = info->planeX;
-		info->planeX = info->planeX * cos(info->rotSpeed) - info->planeY * sin(info->rotSpeed);
-		info->planeY = oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
-	}
-	if (info->key_esc)
-		exit(0);
-}
+	double oldDirX = info->player.dirX;
+	double oldPlaneX = info->player.planeX;
 
-int		key_press(int key, t_info *info)
-{
+	if (key == K_W)
+	{
+		if (!info->map.map[(int)(info->player.posX + info->player.dirX * info->player.moveSpeed)][(int)(info->player.posY)])
+			info->player.posX += info->player.dirX * info->player.moveSpeed;
+		if (!info->map.map[(int)(info->player.posX)][(int)(info->player.posY + info->player.dirY * info->player.moveSpeed)])
+			info->player.posY += info->player.dirY * info->player.moveSpeed;
+	}
+	if (key == K_S)
+	{
+		if (!info->map.map[(int)(info->player.posX - info->player.dirX * info->player.moveSpeed)][(int)(info->player.posY)])
+			info->player.posX -= info->player.dirX * info->player.moveSpeed;
+		if (!info->map.map[(int)(info->player.posX)][(int)(info->player.posY - info->player.dirY * info->player.moveSpeed)])
+			info->player.posY -= info->player.dirY * info->player.moveSpeed;
+	}
+	if (key == K_D)
+	{
+		info->player.dirX = info->player.dirX * cos(-info->player.rotSpeed) - info->player.dirY * sin(-info->player.rotSpeed);
+		info->player.dirY = oldDirX * sin(-info->player.rotSpeed) + info->player.dirY * cos(-info->player.rotSpeed);
+		info->player.planeX = info->player.planeX * cos(-info->player.rotSpeed) - info->player.planeY * sin(-info->player.rotSpeed);
+		info->player.planeY = oldPlaneX * sin(-info->player.rotSpeed) + info->player.planeY * cos(-info->player.rotSpeed);
+	}
+	if (key == K_A)
+	{
+		info->player.dirX = info->player.dirX * cos(info->player.rotSpeed) - info->player.dirY * sin(info->player.rotSpeed);
+		info->player.dirY = oldDirX * sin(info->player.rotSpeed) + info->player.dirY * cos(info->player.rotSpeed);
+		info->player.planeX = info->player.planeX * cos(info->player.rotSpeed) - info->player.planeY * sin(info->player.rotSpeed);
+		info->player.planeY = oldPlaneX * sin(info->player.rotSpeed) + info->player.planeY * cos(info->player.rotSpeed);
+	}
 	if (key == K_ESC)
 		exit(0);
-	else if (key == K_W)
-		info->key_w = 1;
-	else if (key == K_A)
-		info->key_a = 1;
-	else if (key == K_S)
-		info->key_s = 1;
-	else if (key == K_D)
-		info->key_d = 1;
-	return (0);
-}
-
-int		key_release(int key, t_info *info)
-{
-	if (key == K_ESC)
-		exit(0);
-	else if (key == K_W)
-		info->key_w = 0;
-	else if (key == K_A)
-		info->key_a = 0;
-	else if (key == K_S)
-		info->key_s = 0;
-	else if (key == K_D)
-		info->key_d = 0;
 	return (0);
 }

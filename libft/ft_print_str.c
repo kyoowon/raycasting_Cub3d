@@ -6,11 +6,11 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 00:26:18 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/04/04 15:41:59 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/17 18:56:20 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int			ft_print_char(int c, t_option *tp)
 {

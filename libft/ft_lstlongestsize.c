@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strerror.c                                      :+:      :+:    :+:   */
+/*   ft_lstlongestsize.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 17:29:31 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/18 18:04:57 by kyuwonlee        ###   ########.fr       */
+/*   Created: 2021/05/19 23:46:10 by kyuwonlee         #+#    #+#             */
+/*   Updated: 2021/05/19 23:46:58 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strexit(char *str)
+int		ft_lstlongestsize(t_list *lst)
 {
-	ft_putstr(str);
-	ft_putstr("\n");
-	exit(0);
+	int max;
+
+	max = -1;
+	while (lst)
+	{
+		if (max < ft_strlen((char *)lst->content))
+			max = ft_strlen((char *)lst->content);
+		lst = lst->next;
+	}
+	return (max);
 }

@@ -6,11 +6,11 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 23:58:15 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/04/04 15:12:59 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/17 18:56:42 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int			ft_putchar(char c)
 {

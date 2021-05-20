@@ -6,13 +6,13 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 19:23:01 by kyulee            #+#    #+#             */
-/*   Updated: 2021/04/04 15:42:57 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/17 18:56:54 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int			ft_nbr_len(long long nbr, t_option *tp)
+int			ft_printf_nbr_len(long long nbr, t_option *tp)
 {
 	int		len;
 
@@ -45,7 +45,7 @@ char		*ft_nbr_itoa(char **result, unsigned long long nbr, t_option *tp)
 	int		len;
 	int		i;
 
-	nbr_len = ft_nbr_len(nbr, tp);
+	nbr_len = ft_printf_nbr_len(nbr, tp);
 	len = ft_check_prec(nbr_len, tp);
 	if (!(*result = (char *)malloc(sizeof(char) * (len + 1))))
 		return (NULL);

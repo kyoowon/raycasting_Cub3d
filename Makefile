@@ -6,7 +6,7 @@
 #    By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/17 18:05:40 by kyuwonlee         #+#    #+#              #
-#    Updated: 2021/05/17 18:06:01 by kyuwonlee        ###   ########.fr        #
+#    Updated: 2021/05/19 20:41:07 by kyuwonlee        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,10 @@ LIBFT_A = ./libft/libft.a
 ABBR	=	ft_cub3d \
 			ft_drawing \
 			ft_hook \
-			ft_parsing
+			ft_parsing \
+			ft_validate_info \
+			ft_read_info \
+			ft_read_map
 
 SRCS = $(addsuffix .c, $(addprefix srcs/, $(ABBR)))
 

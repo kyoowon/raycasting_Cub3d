@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/04 15:30:50 by kyulee            #+#    #+#             */
-/*   Updated: 2020/11/02 17:28:31 by kyulee           ###   ########.fr       */
+/*   Updated: 2021/05/19 23:51:47 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+int		ft_strlen(const char *str)
 {
 	size_t i;
 

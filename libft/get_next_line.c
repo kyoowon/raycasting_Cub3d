@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 21:22:12 by kyulee            #+#    #+#             */
-/*   Updated: 2021/01/10 18:19:48 by kyulee           ###   ########.fr       */
+/*   Updated: 2021/05/18 21:13:03 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 /*
 ** factor - backup : String to copy. tmp : Initialization value.
@@ -79,7 +79,7 @@ int		get_next_line(int fd, char **line)
 	while ((read_size = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
 		buff[read_size] = '\0';
-		temp = ft_strjoin(stack[fd], buff);
+		temp = ft_gnl_strjoin(stack[fd], buff);
 		free(stack[fd]);
 		stack[fd] = temp;
 		if ((point = ft_strchr(stack[fd], '\n')) != NULL)
@@ -88,4 +88,32 @@ int		get_next_line(int fd, char **line)
 	if (read_size < 0)
 		return (-1);
 	return (return_lines(&stack[fd], line, point));
+}
+
+char	*ft_gnl_strjoin(char const *s1, char const *s2)
+{
+	char	*ret;
+	size_t	len;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if (!s1)
+		return (ft_strdup(s2));
+	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	if (!(ret = (char *)malloc(sizeof(char) * len)))
+		return (NULL);
+	while (s1[i])
+	{
+		ret[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		ret[i + j] = s2[j];
+		j++;
+	}
+	ret[i + j] = '\0';
+	return (ret);
 }

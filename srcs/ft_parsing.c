@@ -6,11 +6,11 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:51:12 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/17 17:51:46 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/19 18:00:34 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "ft_cub3d.h"
 
 void sort_order(t_pair *orders, int amount)
 {
@@ -71,17 +71,17 @@ void draw_floor(t_info *info)
 	y = info->height / 2 + 1;
 	while (y < info->height)
 	{
-		float rayDirX0 = info->dirX - info->planeX;
-		float rayDirY0 = info->dirY - info->planeY;
-		float rayDirX1 = info->dirX + info->planeX;
-		float rayDirY1 = info->dirY + info->planeY;
+		float rayDirX0 = info->player.dirX - info->player.planeX;
+		float rayDirY0 = info->player.dirY - info->player.planeY;
+		float rayDirX1 = info->player.dirX + info->player.planeX;
+		float rayDirY1 = info->player.dirY + info->player.planeY;
 		int p = y - info->height / 2;
 		float posZ = 0.5 * info->height;
 		float rowDistance = posZ / p;
 		float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / info->width;
 		float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / info->width;
-		float floorX = info->posX + rowDistance * rayDirX0;
-		float floorY = info->posY + rowDistance * rayDirY0;
+		float floorX = info->player.posX + rowDistance * rayDirX0;
+		float floorY = info->player.posY + rowDistance * rayDirY0;
 		x = 0;
 		while (++x < info->width)
 		{
@@ -101,10 +101,10 @@ void draw_floor(t_info *info)
 			int color;
 			color = info->texture.texture[floorTexture][info->texture.texwidth * ty + tx];
 			color = (color >> 1) & 8355711;
-			info->texture.buf[y][x] = color;
+			info->buf[y][x] = color;
 			color = info->texture.texture[ceilingTexture][info->texture.texwidth * ty + tx];
 			color = (color >> 1) & 8355711;
-			info->texture.buf[info->height - y - 1][x] = color;
+			info->buf[info->height - y - 1][x] = color;
 		}
 		y++;
 	}
@@ -119,32 +119,32 @@ void draw_wall(t_info *info, t_vec *vec)
 	while (x < info->width)
 	{
 		vec->cameraX = 2 * x / (double)info->width - 1;
-		vec->rayDirX = info->dirX + info->planeX * vec->cameraX;
-		vec->rayDirY = info->dirY + info->planeY * vec->cameraX;
-		vec->mapX = (int)info->posX;
-		vec->mapY = (int)info->posY;
+		vec->rayDirX = info->player.dirX + info->player.planeX * vec->cameraX;
+		vec->rayDirY = info->player.dirY + info->player.planeY * vec->cameraX;
+		vec->mapX = (int)info->player.posX;
+		vec->mapY = (int)info->player.posY;
 		vec->deltaDistX = fabs(1 / vec->rayDirX);
 		vec->deltaDistY = fabs(1 / vec->rayDirY);
 		vec->hit = 0;
 		if (vec->rayDirX < 0)
 		{
 			vec->stepX = -1;
-			vec->sideDistX = (info->posX - vec->mapX) * vec->deltaDistX;
+			vec->sideDistX = (info->player.posX - vec->mapX) * vec->deltaDistX;
 		}
 		else
 		{
 			vec->stepX = 1;
-			vec->sideDistX = (vec->mapX + 1.0 - info->posX) * vec->deltaDistX;
+			vec->sideDistX = (vec->mapX + 1.0 - info->player.posX) * vec->deltaDistX;
 		}
 		if (vec->rayDirY < 0)
 		{
 			vec->stepY = -1;
-			vec->sideDistY = (info->posY - vec->mapY) * vec->deltaDistY;
+			vec->sideDistY = (info->player.posY - vec->mapY) * vec->deltaDistY;
 		}
 		else
 		{
 			vec->stepY = 1;
-			vec->sideDistY = (vec->mapY + 1.0 - info->posY) * vec->deltaDistY;
+			vec->sideDistY = (vec->mapY + 1.0 - info->player.posY) * vec->deltaDistY;
 		}
 		while (vec->hit == 0)
 		{
@@ -164,9 +164,9 @@ void draw_wall(t_info *info, t_vec *vec)
 				vec->hit = 1;
 		}
 		if (vec->side == 0)
-			vec->perpWallDist = (vec->mapX - info->posX + (1 - vec->stepX) / 2) / vec->rayDirX;
+			vec->perpWallDist = (vec->mapX - info->player.posX + (1 - vec->stepX) / 2) / vec->rayDirX;
 		else
-			vec->perpWallDist = (vec->mapY - info->posY + (1 - vec->stepY) / 2) / vec->rayDirY;
+			vec->perpWallDist = (vec->mapY - info->player.posY + (1 - vec->stepY) / 2) / vec->rayDirY;
 		vec->lineHeight = (int)(info->height / vec->perpWallDist);
 		vec->drawStart = -vec->lineHeight / 2 + info->height / 2;
 		if (vec->drawStart < 0)
@@ -176,9 +176,9 @@ void draw_wall(t_info *info, t_vec *vec)
 			vec->drawEnd = info->height - 1;
 		int texNum = info->map.map[vec->mapX][vec->mapY] - 1;
 		if (vec->side == 0)
-			vec->wallX = info->posY + vec->perpWallDist * vec->rayDirY;
+			vec->wallX = info->player.posY + vec->perpWallDist * vec->rayDirY;
 		else
-			vec->wallX = info->posX + vec->perpWallDist * vec->rayDirX;
+			vec->wallX = info->player.posX + vec->perpWallDist * vec->rayDirX;
 		vec->wallX -= floor((vec->wallX));
 		int texX = (int)(vec->wallX * (double)info->texture.texwidth);
 		if (vec->side == 0 && vec->rayDirX > 0)
@@ -195,7 +195,7 @@ void draw_wall(t_info *info, t_vec *vec)
 			int color = info->texture.texture[texNum][info->texture.texheight * texY + texX];
 			if (vec->side == 1)
 				color = (color >> 1) & 8355711;
-			info->texture.buf[y][x] = color;
+			info->buf[y][x] = color;
 			y++;
 		}
 		info->zBuffer[x] = vec->perpWallDist;
@@ -213,18 +213,18 @@ void draw_sprite(t_info *info)
 	while (i < numSprites)
 	{
 		info->spriteOrder[i] = i;
-		info->spriteDistance[i] = ((info->posX - info->sprite[i].x) * (info->posX - info->sprite[i].x) + (info->posY - info->sprite[i].y) * (info->posY - info->sprite[i].y));
+		info->spriteDistance[i] = ((info->player.posX - info->sprite[i].x) * (info->player.posX - info->sprite[i].x) + (info->player.posY - info->sprite[i].y) * (info->player.posY - info->sprite[i].y));
 		i++;
 	}
 	sortSprites(info->spriteOrder, info->spriteDistance, numSprites);
 	i = 0;
 	while (i < numSprites)
 	{
-		double spriteX = info->sprite[info->spriteOrder[i]].x - info->posX;
-		double spriteY = info->sprite[info->spriteOrder[i]].y - info->posY;
-		double invDet = 1.0 / (info->planeX * info->dirY - info->dirX * info->planeY);
-		double transformX = invDet * (info->dirY * spriteX - info->dirX * spriteY);
-		double transformY = invDet * (-info->planeY * spriteX + info->planeX * spriteY);
+		double spriteX = info->sprite[info->spriteOrder[i]].x - info->player.posX;
+		double spriteY = info->sprite[info->spriteOrder[i]].y - info->player.posY;
+		double invDet = 1.0 / (info->player.planeX * info->player.dirY - info->player.dirX * info->player.planeY);
+		double transformX = invDet * (info->player.dirY * spriteX - info->player.dirX * spriteY);
+		double transformY = invDet * (-info->player.planeY * spriteX + info->player.planeX * spriteY);
 		int spriteScreenX = (int)((info->width / 2) * (1 + transformX / transformY));
 		int vMoveScreen = (int)(vMove / transformY);
 		int spriteHeight = (int)fabs((info->height / transformY) / vDiv);
@@ -253,7 +253,7 @@ void draw_sprite(t_info *info)
 					int texY = ((d * info->texture.texheight) / spriteHeight) / 256;
 					int color = info->texture.texture[info->sprite[info->spriteOrder[i]].texture][info->texture.texwidth * texY + texX]; //get current color from the texture
 					if ((color & 0x00FFFFFF) != 0)
-						info->texture.buf[y][stripe] = color;
+						info->buf[y][stripe] = color;
 					y++;
 				}
 			stripe++;

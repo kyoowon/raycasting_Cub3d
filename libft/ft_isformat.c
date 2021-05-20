@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strerror.c                                      :+:      :+:    :+:   */
+/*   ft_isformat.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 17:29:31 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/18 18:04:57 by kyuwonlee        ###   ########.fr       */
+/*   Created: 2021/05/18 18:20:01 by kyuwonlee         #+#    #+#             */
+/*   Updated: 2021/05/18 18:21:40 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strexit(char *str)
+int	ft_isformat(char *str, char *format)
 {
-	ft_putstr(str);
-	ft_putstr("\n");
-	exit(0);
+	int		len_str;
+	int		len_fmt;
+	char	*fmt_of_str;
+
+	len_str = ft_strlen(str);
+	len_fmt = ft_strlen(format);
+	if (len_str <= len_fmt)
+		return (0);
+	fmt_of_str = str + len_str - len_fmt;
+	if (ft_strcmp(fmt_of_str, format) == 0)
+		return (1);
+	return (0);
 }

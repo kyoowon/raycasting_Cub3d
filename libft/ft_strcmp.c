@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strerror.c                                      :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 17:29:31 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/18 18:04:57 by kyuwonlee        ###   ########.fr       */
+/*   Created: 2021/05/17 18:40:15 by kyuwonlee         #+#    #+#             */
+/*   Updated: 2021/05/17 18:42:10 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strexit(char *str)
+int		ft_strcmp(const char *s1, const char *s2)
 {
-	ft_putstr(str);
-	ft_putstr("\n");
-	exit(0);
+	int i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (s1[i] - s2[i]);
 }

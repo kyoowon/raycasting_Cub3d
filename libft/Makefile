@@ -25,9 +25,8 @@ SRC =	ft_atoi.c\
 		ft_strnstr.c\
 		ft_strrchr.c\
 		ft_tolower.c\
-		ft_toupper.c
-
-SRC2=	ft_substr.c\
+		ft_toupper.c\
+		ft_substr.c\
 		ft_strjoin.c\
 		ft_strtrim.c\
 		ft_split.c\
@@ -45,23 +44,25 @@ SRC2=	ft_substr.c\
 		ft_lstdelone.c\
 		ft_lstclear.c\
 		ft_lstiter.c\
-		ft_lstmap.c
-
-GNL=	get_next_line.c\
-		get_next_line_utils.c\
-		get_next_line_bonus.c\
-		get_next_line_utils_bonus.c
-
-PTF=	ft_printf.c\
+		ft_lstmap.c\
+		ft_strcmp.c\
+		get_next_line.c\
+		ft_printf.c\
 		ft_print_utils.c\
 		ft_print_str.c\
 		ft_print_nbr.c\
-		ft_print_nbr_utils.c
+		ft_print_nbr_utils.c\
+		ft_strexit.c\
+		ft_isformat.c\
+		ft_alldigit.c\
+		ft_frees.c\
+		ft_isset.c\
+		ft_lstlongestsize.c
 
 .c.o : 
 	$(CC) $(CFLAGS) -c $< -o $@
 
-OBJ = $(SRC:.c=.o) $(SRC2:.c=.o) $(GNL:.c=.o) $(PTF:.c=.o)
+OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
