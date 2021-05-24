@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:53:33 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/20 18:04:27 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/24 16:44:13 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,24 @@ int		rearrange_all(t_info *info)
 	info->win = mlx_new_window(info->mlx, info->width, info->height, "Cub3d");
 	allocate_buffer(info);
 	load_texture(info);
-	// set_sprite(info);
-	info->img.img = mlx_new_image(info->mlx, info->width, info->height);
-	info->img.data = (int *)mlx_get_data_addr(info->img.img,
-			&info->img.bpp, &info->img.size_l, &info->img.endian);
+	set_sprite(info);
 	return (1);
 }
 
 void	apply_player_orientation(t_info *info)
 {
-	int degree;
+	double degree;
 
 	degree = 0;
 	if (info->player.dir == 'N')
-		degree = 90;
-	else if (info->player.dir == 'S')
-		degree = 270;
-	else if (info->player.dir == 'E')
 		degree = 0;
-	else if (info->player.dir == 'W')
+	else if (info->player.dir == 'S')
 		degree = 180;
-	// rotate_player(&info->player, degree * (PI / 180));
+	else if (info->player.dir == 'E')
+		degree = 270;
+	else if (info->player.dir == 'W')
+		degree = 90;
+	rotate_player(&info->player, degree * (PI / 180));
 }
 
 void	allocate_buffer(t_info *info)
@@ -96,4 +93,47 @@ void	load_image(t_info *info, int *texture, char *path, t_img *img)
 		y++;
 	}
 	mlx_destroy_image(info->mlx, img->img);
+}
+
+void set_sprite(t_info *info)
+{
+	int x;
+	int y;
+	int i;
+
+	if (!(info->sprite = (t_sprite *)malloc(sizeof(t_sprite) * info->num_sprite)))
+		ft_strexit("ERROR: Malloc Fail!");
+	if (!(info->spriteOrder = (int *)malloc(sizeof(int) * info->num_sprite)))
+		ft_strexit("ERROR: Malloc Fail!");
+	if (!(info->spriteDistance = (double *)malloc(sizeof(double) * info->num_sprite)))
+		ft_strexit("ERROR: Malloc Fail!");
+	i = 0;
+	y = 0;
+	while (y < info->map.mapwidth)
+	{
+		x = 0;
+		while (x < info->map.mapheight)
+		{
+			if (info->map.map[y][x] == '2')
+			{
+				info->sprite[i].x = y + 0.5;
+				info->sprite[i++].y = x + 0.5;
+			}
+			if (i == info->num_sprite)
+				break;
+			x++;
+		}
+		y++;
+	}
+}
+
+void	rotate_player(t_player *player, double degree)
+{
+	double oldDirX = player->dirX;
+	double oldPlaneX = player->planeX;
+		
+	player->dirX = player->dirX * cos(degree) - player->dirY * sin(degree);
+	player->dirY = oldDirX * sin(degree) + player->dirY * cos(degree);
+	player->planeX = player->planeX * cos(degree) - player->planeY * sin(degree);
+	player->planeY = oldPlaneX * sin(degree) + player->planeY * cos(degree);
 }

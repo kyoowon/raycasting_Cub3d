@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/20 17:42:55 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/24 16:37:38 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define MAPWIDTH 24
-# define MAPHEIGHT 24
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
-# define numSprites 19
 # define uDiv 1
 # define vDiv 1
-# define vMove 0.0
+# define vMove 10.0
 # define ON 1
 # define OFF 0
 
@@ -98,8 +95,6 @@ typedef struct	s_texture
 	int			texture[6][TEXWIDTH * TEXHEIGHT];
 	int			floor;
 	int			ceiling;
-	int			texheight;
-	int			texwidth;
 }				t_texture;
 
 typedef struct	s_map
@@ -113,7 +108,6 @@ typedef struct	s_sprite
 {
 	double		x;
 	double		y;
-	int			texture;
 }				t_sprite;
 
 typedef struct	s_player
@@ -129,6 +123,17 @@ typedef struct	s_player
 	char		dir;
 }				t_player;
 
+typedef struct	s_key
+{
+	int		key_a;
+	int		key_w;
+	int		key_s;
+	int		key_d;
+	int		key_ar_r;
+	int		key_ar_l;
+	int		key_esc;
+}				t_key;
+
 typedef struct	s_info
 {
 	void		*mlx;
@@ -141,13 +146,14 @@ typedef struct	s_info
 	char		*line;
 	double		*zBuffer;
 	t_player	player;
+	t_key		key;
 	t_img		img;
 	t_map		map;
 	t_texture	texture;
 	t_sprite	*sprite;
 	t_list		*lstmap;
-	int			spriteOrder[numSprites];
-	double		spriteDistance[numSprites];
+	int			*spriteOrder;
+	double		*spriteDistance;
 }				t_info;
 
 typedef struct	s_pair
@@ -162,6 +168,7 @@ int		main_loop(t_info *info);
 void	init_map(t_info *info);
 
 void	calc(t_info *info);
+void	draw(t_info *info);
 
 int		rearrange_all(t_info *info);
 void	apply_player_orientation(t_info *info);
@@ -169,8 +176,7 @@ void	allocate_buffer(t_info *info);
 void	load_texture(t_info *info);
 void	load_image(t_info *info, int *texture, char *path, t_img *img);
 
-
-int		key_press(int key, t_info *info);
+int		key_update(t_info *info);
 
 void	validate_arguments(int argc, char *option, int *save);
 
@@ -188,5 +194,10 @@ void	create_player(t_info *info, int i, int j);
 void	validate_map(t_info *info);
 void	validate_map_horizontal(char **map, int width, int height);
 void	validate_map_vertical(char **map, int width, int height);
+void	set_sprite(t_info *info);
+void	rotate_player(t_player *player, double degree);
+int		key_press(int key, t_info *info);
+int		key_release(int key, t_info *info);
+int     ft_bitmap(t_info *info);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 20:36:10 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/20 18:03:39 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/23 21:48:12 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	open_cubfile(t_info *info)
 		ft_frees(tab);
 		if (flag == MAP_START)
 			break ;
-		ft_printf("%s \n", line);
 		free(line);
 	}
 	info->line = line;

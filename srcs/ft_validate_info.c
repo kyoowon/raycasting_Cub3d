@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:49:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/20 17:23:24 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/23 23:38:13 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,20 @@ void	validate_map_horizontal(char **map, int width, int height)
 	int	y;
 
 	y = 0;
-	while (y < height)
+	while (y < width)
 	{
 		if (map[y][0] != ' ' && map[y][0] != WALL)
 			ft_strexit("ERROR: Map Not Surronded By Walls! (Left Side)");
 		x = 1;
-		while (x < width)
+		while (x < height)
 		{
-			while (x < width && map[y][x] == ' ')
+			while (x < height && map[y][x] == ' ')
 				x++;
-			if (x == width)
+			if (x == height)
 				break ;
 			if (map[y][x - 1] == ' ' && map[y][x] != WALL)
 				ft_strexit("ERROR: Map Not Surronded By Walls! (Left Side)");
-			while (x < width && map[y][x] != ' ')
+			while (x < height && map[y][x] != ' ')
 				x++;
 			if (map[y][x - 1] != WALL)
 				ft_strexit("ERROR: Map Not Surronded By Walls! (Right Side)");
@@ -81,20 +81,20 @@ void	validate_map_vertical(char **map, int width, int height)
 	int	y;
 
 	x = 0;
-	while (x < width)
+	while (x < height)
 	{
 		if (map[0][x] != ' ' && map[0][x] != WALL)
 			ft_strexit("ERROR: Map Not Surronded By Walls! (Upper Side)");
 		y = 1;
-		while (y < height)
+		while (y < width)
 		{
-			while (y < height && map[y][x] == ' ')
+			while (y < width && map[y][x] == ' ')
 				y++;
-			if (y == height)
+			if (y == width)
 				break ;
 			if (map[y - 1][x] == ' ' && map[y][x] != WALL)
 				ft_strexit("ERROR: Map Not Surronded By Walls! (Upper Side)");
-			while (y < height && map[y][x] != ' ')
+			while (y < width && map[y][x] != ' ')
 				y++;
 			if (map[y - 1][x] != WALL)
 				ft_strexit("ERROR: Map Not Surronded By Walls! (Bottom Side)");

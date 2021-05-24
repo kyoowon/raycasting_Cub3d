@@ -6,16 +6,32 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 16:06:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/20 17:49:58 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/24 16:55:45 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-int	main_loop(t_info *info)
+int		main_loop(t_info *info)
 {
 	calc(info);
+	draw(info);
+	if (ft_bitmap(info))
+		exit(0);
+	key_update(info);
 	return (0);
+}
+
+void	draw(t_info *info)
+{
+	for (int y = 0; y < info->height; y++)
+	{
+		for (int x = 0; x < info->width; x++)
+		{
+			info->img.data[y * info->width + x] = info->buf[y][x];
+		}
+	}
+	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
 }
 
 void init_info(t_info *info)
@@ -33,6 +49,13 @@ void init_info(t_info *info)
 	info->num_sprite = 0;
 	info->buf = NULL;
 	info->zBuffer = NULL;
+	info->key.key_a = 0;
+	info->key.key_w = 0;
+	info->key.key_d = 0;
+	info->key.key_s = 0;
+	info->key.key_esc = 0;
+	info->key.key_ar_r = 0;
+	info->key.key_ar_l = 0;
 }
 
 int		main(int argc, char *argv[])
@@ -48,8 +71,12 @@ int		main(int argc, char *argv[])
 	read_map(&info, info.line);
 	validate_map(&info);
 	rearrange_all(&info);
-	// mlx_loop_hook(info.mlx, &main_loop, &info);
-	// mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
+
+	info.img.img = mlx_new_image(info.mlx, info.width, info.height);
+	info.img.data = (int *)mlx_get_data_addr(info.img.img, &info.img.bpp, &info.img.size_l, &info.img.endian);
+	mlx_loop_hook(info.mlx, &main_loop, &info);
+	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
+	mlx_hook(info.win, X_EVENT_KEY_RELEASE, 0, &key_release, &info);
 	mlx_loop(info.mlx);
 }
 

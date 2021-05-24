@@ -6,12 +6,12 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:51:12 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/19 18:00:34 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/24 16:05:34 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
-
+#include "stdio.h"
 void sort_order(t_pair *orders, int amount)
 {
 	t_pair tmp;
@@ -87,8 +87,6 @@ void draw_floor(t_info *info)
 		{
 			int cellX = (int)(floorX);
 			int cellY = (int)(floorY);
-			int tx = (int)(info->texture.texwidth * (floorX - cellX)) & (info->texture.texwidth - 1);
-			int ty = (int)(info->texture.texheight * (floorY - cellY)) & (info->texture.texheight - 1);
 			floorX += floorStepX;
 			floorY += floorStepY;
 			int checkerBoardPattern = (int)(cellX + cellY) & 1;
@@ -97,12 +95,11 @@ void draw_floor(t_info *info)
 				floorTexture = 3;
 			else
 				floorTexture = 4;
-			int ceilingTexture = 6;
 			int color;
-			color = info->texture.texture[floorTexture][info->texture.texwidth * ty + tx];
+			color = info->texture.floor;
 			color = (color >> 1) & 8355711;
 			info->buf[y][x] = color;
-			color = info->texture.texture[ceilingTexture][info->texture.texwidth * ty + tx];
+			color = info->texture.ceiling;
 			color = (color >> 1) & 8355711;
 			info->buf[info->height - y - 1][x] = color;
 		}
@@ -125,7 +122,6 @@ void draw_wall(t_info *info, t_vec *vec)
 		vec->mapY = (int)info->player.posY;
 		vec->deltaDistX = fabs(1 / vec->rayDirX);
 		vec->deltaDistY = fabs(1 / vec->rayDirY);
-		vec->hit = 0;
 		if (vec->rayDirX < 0)
 		{
 			vec->stepX = -1;
@@ -146,22 +142,33 @@ void draw_wall(t_info *info, t_vec *vec)
 			vec->stepY = 1;
 			vec->sideDistY = (vec->mapY + 1.0 - info->player.posY) * vec->deltaDistY;
 		}
+		int wall_type = 0;
+		vec->hit = 0;
 		while (vec->hit == 0)
 		{
 			if (vec->sideDistX < vec->sideDistY)
 			{
+				if (vec->stepX == 1)
+					wall_type = 1;
+				else
+					wall_type = 0;
 				vec->sideDistX += vec->deltaDistX;
 				vec->mapX += vec->stepX;
 				vec->side = 0;
 			}
 			else
 			{
+				if (vec->stepY == 1)
+					wall_type = 2;
+				else
+					wall_type = 3;
 				vec->sideDistY += vec->deltaDistY;
 				vec->mapY += vec->stepY;
 				vec->side = 1;
 			}
-			if (info->map.map[vec->mapX][vec->mapY] > 0)
+			if (info->map.map[vec->mapX][vec->mapY] == '1'){
 				vec->hit = 1;
+			}
 		}
 		if (vec->side == 0)
 			vec->perpWallDist = (vec->mapX - info->player.posX + (1 - vec->stepX) / 2) / vec->rayDirX;
@@ -174,27 +181,24 @@ void draw_wall(t_info *info, t_vec *vec)
 		vec->drawEnd = vec->lineHeight / 2 + info->height / 2;
 		if (vec->drawEnd >= info->height)
 			vec->drawEnd = info->height - 1;
-		int texNum = info->map.map[vec->mapX][vec->mapY] - 1;
 		if (vec->side == 0)
 			vec->wallX = info->player.posY + vec->perpWallDist * vec->rayDirY;
 		else
 			vec->wallX = info->player.posX + vec->perpWallDist * vec->rayDirX;
 		vec->wallX -= floor((vec->wallX));
-		int texX = (int)(vec->wallX * (double)info->texture.texwidth);
+		int texX = (int)(vec->wallX * (double)TEXWIDTH);
 		if (vec->side == 0 && vec->rayDirX > 0)
-			texX = info->texture.texwidth - texX - 1;
+			texX = TEXWIDTH - texX - 1;
 		if (vec->side == 1 && vec->rayDirY < 0)
-			texX = info->texture.texwidth - texX - 1;
-		double step = 1.0 * info->texture.texheight / vec->lineHeight;
+			texX = TEXWIDTH - texX - 1;
+		double step = 1.0 * TEXHEIGHT / vec->lineHeight;
 		double texPos = (vec->drawStart - info->height / 2 + vec->lineHeight / 2) * step;
 		y = vec->drawStart;
 		while (y < vec->drawEnd)
 		{
-			int texY = (int)texPos & (info->texture.texheight - 1);
+			int texY = (int)texPos & (TEXHEIGHT - 1);
 			texPos += step;
-			int color = info->texture.texture[texNum][info->texture.texheight * texY + texX];
-			if (vec->side == 1)
-				color = (color >> 1) & 8355711;
+			int color =  info->texture.texture[wall_type][TEXHEIGHT * texY + texX];
 			info->buf[y][x] = color;
 			y++;
 		}
@@ -210,15 +214,15 @@ void draw_sprite(t_info *info)
 	int stripe;
 
 	i = 0;
-	while (i < numSprites)
+	while (i < info->num_sprite)
 	{
 		info->spriteOrder[i] = i;
 		info->spriteDistance[i] = ((info->player.posX - info->sprite[i].x) * (info->player.posX - info->sprite[i].x) + (info->player.posY - info->sprite[i].y) * (info->player.posY - info->sprite[i].y));
 		i++;
 	}
-	sortSprites(info->spriteOrder, info->spriteDistance, numSprites);
+	sortSprites(info->spriteOrder, info->spriteDistance,  info->num_sprite);
 	i = 0;
-	while (i < numSprites)
+	while (i < info->num_sprite)
 	{
 		double spriteX = info->sprite[info->spriteOrder[i]].x - info->player.posX;
 		double spriteY = info->sprite[info->spriteOrder[i]].y - info->player.posY;
@@ -245,13 +249,13 @@ void draw_sprite(t_info *info)
 		while (stripe < drawEndX)
 		{
 			y = drawStartY;
-			int texX = (int)((256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * info->texture.texwidth / spriteWidth) / 256);
+			int texX = (int)((256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * TEXWIDTH / spriteWidth) / 256);
 			if (transformY > 0 && stripe > 0 && stripe < info->width && transformY < info->zBuffer[stripe])
 				while (y < drawEndY)
 				{
 					int d = (y - vMoveScreen) * 256 - info->height * 128 + spriteHeight * 128;
-					int texY = ((d * info->texture.texheight) / spriteHeight) / 256;
-					int color = info->texture.texture[info->sprite[info->spriteOrder[i]].texture][info->texture.texwidth * texY + texX]; //get current color from the texture
+					int texY = ((d * TEXHEIGHT) / spriteHeight) / 256;
+					int color = info->texture.texture[SPR][TEXWIDTH * texY + texX];
 					if ((color & 0x00FFFFFF) != 0)
 						info->buf[y][stripe] = color;
 					y++;

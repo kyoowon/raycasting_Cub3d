@@ -6,7 +6,7 @@
 #    By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/17 18:05:40 by kyuwonlee         #+#    #+#              #
-#    Updated: 2021/05/19 20:41:07 by kyuwonlee        ###   ########.fr        #
+#    Updated: 2021/05/24 16:38:43 by kyuwonlee        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ ABBR	=	ft_cub3d \
 			ft_parsing \
 			ft_validate_info \
 			ft_read_info \
-			ft_read_map
+			ft_read_map \
+			ft_save
 
 SRCS = $(addsuffix .c, $(addprefix srcs/, $(ABBR)))
 
@@ -53,7 +54,7 @@ fclean: clean
 re: fclean all
 
 test: re
-	./$(NAME) cubs/test.cub
+	./$(NAME) cubs/example.cub
 
 save: re
 	./$(NAME) cubs/test.cub --save
