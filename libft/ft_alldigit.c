@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 15:40:09 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/19 15:42:17 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/25 17:20:41 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_alldigit(char *str)
 {
 	int i;
 
-	i=0;
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')

@@ -6,13 +6,13 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:25:45 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/24 16:38:58 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/25 22:56:54 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-void	ft_bdata(t_info *info, int fd)
+void	bdata(t_info *info, int fd)
 {
 	int				i;
 	int				j;
@@ -36,7 +36,7 @@ void	ft_bdata(t_info *info, int fd)
 	}
 }
 
-void	ft_binfo(t_info *info, int fd)
+void	binfo(t_info *info, int fd)
 {
 	int				n;
 	unsigned char	header[40];
@@ -60,7 +60,7 @@ void	ft_binfo(t_info *info, int fd)
 	write(fd, header, 40);
 }
 
-void	ft_bfile(t_info *info, int fd)
+void	bfile(t_info *info, int fd)
 {
 	int				n;
 	unsigned char	header[14];
@@ -79,16 +79,17 @@ void	ft_bfile(t_info *info, int fd)
 	write(fd, header, 14);
 }
 
-int     ft_bitmap(t_info *info)
+int		bitmap(t_info *info)
 {
-    int fd;
+	int fd;
 
-    fd = open("bitmap.bmp", O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
-    if (fd == -1)
-        ft_strexit("ERROR:file read error!");
-    ft_bfile(info, fd);
-	ft_binfo(info, fd);
-	ft_bdata(info, fd);
+	fd = open("screenshot.bmp", O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+	if (fd == -1)
+		ft_strexit("ERROR: No Such CUB File Available!");
+	bfile(info, fd);
+	binfo(info, fd);
+	bdata(info, fd);
 	close(fd);
-    return (1);
+	ft_putstr("success screenshot.bmp saved!\n");
+	exit(1);
 }

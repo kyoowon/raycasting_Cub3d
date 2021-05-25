@@ -6,7 +6,7 @@
 #    By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/17 18:05:40 by kyuwonlee         #+#    #+#              #
-#    Updated: 2021/05/24 16:38:43 by kyuwonlee        ###   ########.fr        #
+#    Updated: 2021/05/25 22:09:36 by kyuwonlee        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,15 @@ LIBFT_D = ./libft
 LIBFT_A = ./libft/libft.a
 
 ABBR	=	ft_cub3d \
-			ft_drawing \
+			ft_setting \
 			ft_hook \
-			ft_parsing \
+			ft_calc_screen \
 			ft_validate_info \
 			ft_read_info \
 			ft_read_map \
-			ft_save
+			ft_save \
+			ft_sprite \
+			ft_wall
 
 SRCS = $(addsuffix .c, $(addprefix srcs/, $(ABBR)))
 
@@ -54,9 +56,6 @@ fclean: clean
 re: fclean all
 
 test: re
-	./$(NAME) cubs/example.cub
-
-save: re
-	./$(NAME) cubs/test.cub --save
+	./$(NAME) cubs/test.cub
 
 .PHONY: bonus all clean fclean bonus re test save

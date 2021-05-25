@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:49:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/23 23:38:13 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/25 22:23:24 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	validate_info(t_info *info)
 
 void	validate_map(t_info *info)
 {
-	if (!info->map.mapwidth || !info->map.mapheight)
+	if (!info->map.mwidth || !info->map.mheight)
 		ft_strexit("ERROR: Invalid Map Parsing");
 	if (info->player.dir == '\0')
 		ft_strexit("ERROR: No Player Position Given!");
-	validate_map_horizontal(info->map.map, info->map.mapwidth, info->map.mapheight);
-	validate_map_vertical(info->map.map, info->map.mapwidth, info->map.mapheight);
+	validate_map_horizontal(info->map.map, info->map.mwidth, info->map.mheight);
+	validate_map_vertical(info->map.map, info->map.mwidth, info->map.mheight);
 }
 
 void	validate_map_horizontal(char **map, int width, int height)

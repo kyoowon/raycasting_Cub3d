@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/24 16:37:38 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 01:51:23 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,17 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define TEXWIDTH 64
-# define TEXHEIGHT 64
-# define uDiv 1
-# define vDiv 1
-# define vMove 10.0
+# define TEXWIDTH 256
+# define TEXHEIGHT 256
+# define UDIV 1
+# define VDIV 1
+# define VMOVE 10.0
 # define ON 1
 # define OFF 0
-
-# define TITLE "cub3D"
 # define EMPTY_LINE '\0'
 # define EMPTY '0'
 # define WALL '1'
 # define SPRITE '2'
-
 # define NORTH 0
 # define SOUTH 1
 # define EAST 2
@@ -43,9 +40,7 @@
 # define FLOOR 5
 # define CEILING 6
 # define MAP_START -1
-
 # define PI 3.1415926535897
-
 
 typedef struct	s_img
 {
@@ -61,33 +56,47 @@ typedef struct	s_img
 typedef struct	s_vec
 {
 	int			hit;
-	int			mapX;
-	int			mapY;
+	int			map_x;
+	int			map_y;
 	int			side;
-	int			stepX;
-	int			stepY;
-	double		perpWallDist;
-	double		wallX;
-	double		cameraX;
-	double		rayDirX;
-	double		rayDirY;
-	double		sideDistX;
-	double		sideDistY;
-	double		deltaDistX;
-	double		deltaDistY;
-	int			lineHeight;
-	int			drawStart;
-	int			drawEnd;
+	int			step_x;
+	int			step_y;
+	double		pwdist;
+	double		wall_x;
+	double		camera;
+	double		rdir_x;
+	double		rdir_y;
+	double		sdist_x;
+	double		sdist_y;
+	double		ddist_x;
+	double		ddist_y;
+	int			lineheight;
+	int			drawstart;
+	int			drawend;
+	int			tex_x;
+	int			tex_y;
 }				t_vec;
 
-typedef struct	s_floor
+typedef struct	s_svec
 {
-	double floorXWall;
-	double floorYWall;
-	double distWall;
-	double distPlayer;
-	double currentDist;
-}				t_floor;
+	double		sprite_x;
+	double		sprite_y;
+	double		invdet;
+	double		trans_x;
+	double		trans_y;
+	int			screen;
+	int			vmove_s;
+	int			height;
+	int			width;
+	int			drawstart_x;
+	int			drawend_x;
+	int			drawstart_y;
+	int			drawend_y;
+	int			tex_x;
+	int			tex_y;
+	int			stripe;
+	int			color;
+}				t_svec;
 
 typedef struct	s_texture
 {
@@ -99,8 +108,8 @@ typedef struct	s_texture
 
 typedef struct	s_map
 {
-	int			mapwidth;
-	int			mapheight;
+	int			mwidth;
+	int			mheight;
 	char		**map;
 }				t_map;
 
@@ -112,26 +121,26 @@ typedef struct	s_sprite
 
 typedef struct	s_player
 {
-	double		posX;
-	double		posY;
-	double		dirX;
-	double		dirY;
-	double		planeX;
-	double		planeY;
-	double		moveSpeed;
-	double		rotSpeed;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+	double		m_speed;
+	double		r_speed;
 	char		dir;
 }				t_player;
 
 typedef struct	s_key
 {
-	int		key_a;
-	int		key_w;
-	int		key_s;
-	int		key_d;
-	int		key_ar_r;
-	int		key_ar_l;
-	int		key_esc;
+	int			key_a;
+	int			key_w;
+	int			key_s;
+	int			key_d;
+	int			key_ar_r;
+	int			key_ar_l;
+	int			key_esc;
 }				t_key;
 
 typedef struct	s_info
@@ -144,7 +153,7 @@ typedef struct	s_info
 	int			num_sprite;
 	int			**buf;
 	char		*line;
-	double		*zBuffer;
+	double		*zbuffer;
 	t_player	player;
 	t_key		key;
 	t_img		img;
@@ -152,52 +161,109 @@ typedef struct	s_info
 	t_texture	texture;
 	t_sprite	*sprite;
 	t_list		*lstmap;
-	int			*spriteOrder;
-	double		*spriteDistance;
+	int			*s_order;
+	double		*s_distance;
 }				t_info;
 
 typedef struct	s_pair
 {
-	double	first;
-	int		second;
+	double		first;
+	int			second;
 }				t_pair;
 
-void	init_window(t_info *info);
-void	init_info(t_info *info);
-int		main_loop(t_info *info);
-void	init_map(t_info *info);
+/*
+** ft_cub3d.c
+*/
 
-void	calc(t_info *info);
-void	draw(t_info *info);
+int				main_loop(t_info *info);
+void			draw_window(t_info *info);
+void			save_bitmap(t_info *info);
+void			init_info(t_info *info);
 
-int		rearrange_all(t_info *info);
-void	apply_player_orientation(t_info *info);
-void	allocate_buffer(t_info *info);
-void	load_texture(t_info *info);
-void	load_image(t_info *info, int *texture, char *path, t_img *img);
+/*
+** ft_hook.c
+*/
 
-int		key_update(t_info *info);
+void			key_update(t_player *player, t_map map, t_key key);
+int				key_press(int key, t_info *info);
+int				key_release(int key, t_info *info);
+void			rotate_player(t_player *p, double degree);
 
-void	validate_arguments(int argc, char *option, int *save);
+/*
+** ft_read_info.c
+*/
 
-void	open_cub(char *file_name, t_info *info);
-void	open_cubfile(t_info *info);
-int		decide_what_to_store(t_info *info, char **tab);
-void	store_resolution(t_info *info, char *width, char *height);
-void	store_texture(t_info *info, char *xpm_path, int flag);
-void	store_color(t_info *info, char *rgb_with_comma, int flag);
-void	validate_info(t_info *info);
-void	read_map(t_info *info, char *line);
-void	allocate_map(t_info *info, t_list *curr);
-void	store_map_as_array(t_info *info, t_list *curr);
-void	create_player(t_info *info, int i, int j);
-void	validate_map(t_info *info);
-void	validate_map_horizontal(char **map, int width, int height);
-void	validate_map_vertical(char **map, int width, int height);
-void	set_sprite(t_info *info);
-void	rotate_player(t_player *player, double degree);
-int		key_press(int key, t_info *info);
-int		key_release(int key, t_info *info);
-int     ft_bitmap(t_info *info);
+void			open_cubfile(char *file_name, t_info *info);
+int				decide_what_to_store(t_info *info, char **tab);
+void			store_resolution(t_info *info, char *width, char *height);
+void			store_texture(t_info *info, char *xpm_path, int flag);
+void			store_color(t_info *info, char *rgb_with_comma, int flag);
+
+/*
+** ft_read_info.c
+*/
+
+void			read_map(t_info *info, char *line);
+void			allocate_map(t_info *info, t_list *curr);
+void			store_map_as_array(t_info *info, t_list *curr);
+void			create_player(t_info *info, int i, int j);
+
+/*
+** ft_save.c
+*/
+
+void			bdata(t_info *info, int fd);
+void			binfo(t_info *info, int fd);
+void			bfile(t_info *info, int fd);
+int				bitmap(t_info *info);
+
+/*
+** ft_setting.c
+*/
+
+void			setting_all(t_info *info);
+void			apply_player_orientation(t_player *player);
+void			allocate_buffer(t_info *info);
+void			load_texture(t_info *info);
+void			load_image(t_info *info, int *texture, char *path, t_img *img);
+
+/*
+** ft_wall.c
+*/
+
+void			init_dda(t_player *player, t_vec *vec);
+void			calc_dda_hit(t_info *info, t_vec *vec, int *wall_type);
+void			calc_perpwalldist(t_player *player, t_vec *vec, int height);
+void			calc_texture_wall(t_info *info, t_vec *vec, int x, int type);
+void			draw_wall(t_info *info, t_vec *vec);
+
+/*
+** ft_calc_screen.c
+*/
+
+void			draw_floor_ceiling(t_info *info);
+void			sort_order(t_pair *orders, int amount);
+void			sort_sprites(int *order, double *dist, int amount);
+void			calc_screen(t_info *info);
+
+/*
+** ft_sprite.c
+*/
+
+void			set_malloc_sprite(t_info *info);
+void			set_sprite(t_info *info);
+void			scaling_sprites(t_info *info, t_svec *svec);
+void			drawing_sprite(t_info *info, t_svec *svec);
+void			draw_sprite(t_info *info, t_svec *svec);
+
+/*
+** ft_validate_info.c
+*/
+
+void			validate_arguments(int argc, char *option, int *save);
+void			validate_info(t_info *info);
+void			validate_map(t_info *info);
+void			validate_map_horizontal(char **map, int width, int height);
+void			validate_map_vertical(char **map, int width, int height);
 
 #endif

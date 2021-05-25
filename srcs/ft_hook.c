@@ -6,47 +6,38 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:54:56 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/24 16:12:57 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 01:42:46 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-int		key_update(t_info *info)
+void	key_update(t_player *player, t_map map, t_key key)
 {
-	double oldDirX = info->player.dirX;
-	double oldPlaneX = info->player.planeX;
-	if (info->key.key_w)
+	if (key.key_w)
 	{
-		if (info->map.map[(int)(info->player.posX + info->player.dirX * info->player.moveSpeed)][(int)(info->player.posY)] != '1')
-			info->player.posX += info->player.dirX * info->player.moveSpeed;
-		if (info->map.map[(int)(info->player.posX)][(int)(info->player.posY + info->player.dirY * info->player.moveSpeed)] != '1')
-			info->player.posY += info->player.dirY * info->player.moveSpeed;
+		if (map.map[(int)(player->pos_x + player->dir_x * player->m_speed)]
+				[(int)(player->pos_y)] != '1')
+			player->pos_x += player->dir_x * player->m_speed;
+		if (map.map[(int)(player->pos_x)]
+				[(int)(player->pos_y + player->dir_y * player->m_speed)] != '1')
+			player->pos_y += player->dir_y * player->m_speed;
 	}
-	if (info->key.key_s)
+	if (key.key_s)
 	{
-		if (info->map.map[(int)(info->player.posX - info->player.dirX * info->player.moveSpeed)][(int)(info->player.posY)] != '1')
-			info->player.posX -= info->player.dirX * info->player.moveSpeed;
-		if (info->map.map[(int)(info->player.posX)][(int)(info->player.posY - info->player.dirY * info->player.moveSpeed)] != '1')
-			info->player.posY -= info->player.dirY * info->player.moveSpeed;
+		if (map.map[(int)(player->pos_x - player->dir_x * player->m_speed)]
+				[(int)(player->pos_y)] != '1')
+			player->pos_x -= player->dir_x * player->m_speed;
+		if (map.map[(int)(player->pos_x)]
+				[(int)(player->pos_y - player->dir_y * player->m_speed)] != '1')
+			player->pos_y -= player->dir_y * player->m_speed;
 	}
-	if (info->key.key_d || info->key.key_ar_r)
-	{
-		info->player.dirX = info->player.dirX * cos(-info->player.rotSpeed) - info->player.dirY * sin(-info->player.rotSpeed);
-		info->player.dirY = oldDirX * sin(-info->player.rotSpeed) + info->player.dirY * cos(-info->player.rotSpeed);
-		info->player.planeX = info->player.planeX * cos(-info->player.rotSpeed) - info->player.planeY * sin(-info->player.rotSpeed);
-		info->player.planeY = oldPlaneX * sin(-info->player.rotSpeed) + info->player.planeY * cos(-info->player.rotSpeed);
-	}
-	if (info->key.key_a || info->key.key_ar_l)
-	{
-		info->player.dirX = info->player.dirX * cos(info->player.rotSpeed) - info->player.dirY * sin(info->player.rotSpeed);
-		info->player.dirY = oldDirX * sin(info->player.rotSpeed) + info->player.dirY * cos(info->player.rotSpeed);
-		info->player.planeX = info->player.planeX * cos(info->player.rotSpeed) - info->player.planeY * sin(info->player.rotSpeed);
-		info->player.planeY = oldPlaneX * sin(info->player.rotSpeed) + info->player.planeY * cos(info->player.rotSpeed);
-	}
-	if (info->key.key_esc)
+	if (key.key_d || key.key_ar_r)
+		rotate_player(player, -player->r_speed);
+	if (key.key_a || key.key_ar_l)
+		rotate_player(player, player->r_speed);
+	if (key.key_esc)
 		exit(0);
-	return (0);
 }
 
 int		key_press(int key, t_info *info)
@@ -65,7 +56,6 @@ int		key_press(int key, t_info *info)
 		info->key.key_ar_l = 1;
 	else if (key == K_AR_R)
 		info->key.key_ar_r = 1;
-	
 	return (0);
 }
 
@@ -86,4 +76,17 @@ int		key_release(int key, t_info *info)
 	else if (key == K_AR_R)
 		info->key.key_ar_r = 0;
 	return (0);
+}
+
+void	rotate_player(t_player *p, double degree)
+{
+	double	olddir_x;
+	double	oldplane_x;
+
+	olddir_x = p->dir_x;
+	oldplane_x = p->plane_x;
+	p->dir_x = p->dir_x * cos(degree) - p->dir_y * sin(degree);
+	p->dir_y = olddir_x * sin(degree) + p->dir_y * cos(degree);
+	p->plane_x = p->plane_x * cos(degree) - p->plane_y * sin(degree);
+	p->plane_y = oldplane_x * sin(degree) + p->plane_y * cos(degree);
 }

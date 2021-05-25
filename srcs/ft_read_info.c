@@ -6,18 +6,23 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 20:36:10 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/23 21:48:12 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/25 21:01:12 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-void	open_cubfile(t_info *info)
+void	open_cubfile(char *file_name, t_info *info)
 {
 	char	*line;
 	char	**tab;
 	int		flag;
 
+	if (!ft_isformat(file_name, ".cub"))
+		ft_strexit("ERROR: CUB File Needed!");
+	info->fd = open(file_name, O_RDONLY);
+	if (info->fd == -1)
+		ft_strexit("ERROR: No Such CUB File Available!");
 	flag = 0;
 	while (get_next_line(info->fd, &line) > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 19:34:33 by kyulee            #+#    #+#             */
-/*   Updated: 2021/05/23 23:33:05 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/25 17:22:38 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdarg.h>
-
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1000
@@ -48,7 +47,6 @@ typedef struct	s_option
 	int			hexa;
 
 }				t_option;
-
 
 /*
 ** part 1 function
