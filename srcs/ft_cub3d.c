@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 16:06:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/27 00:02:04 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 00:20:05 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	draw_bitmap(t_info *info)
 
 void	init_info(t_info *info)
 {
-	info->mlx = mlx_init();
 	info->width = 0;
 	info->height = 0;
 	ft_memset(info->texture.path, 0, 6);

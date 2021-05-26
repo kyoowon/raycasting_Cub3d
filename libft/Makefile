@@ -57,7 +57,8 @@ SRC =	ft_atoi.c\
 		ft_alldigit.c\
 		ft_frees.c\
 		ft_isset.c\
-		ft_lstlongestsize.c
+		ft_lstlongestsize.c\
+		ft_dsize.c
 
 .c.o : 
 	$(CC) $(CFLAGS) -c $< -o $@

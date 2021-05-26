@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 19:34:33 by kyulee            #+#    #+#             */
-/*   Updated: 2021/05/26 18:23:27 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 01:01:25 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,5 +178,6 @@ int				ft_isformat(char *str, char *format);
 int				ft_alldigit(char *str);
 void			ft_frees(char **str);
 void			ft_frees_nbr(int **nbr);
+int				ft_dsize(char **tab);
 
 #endif

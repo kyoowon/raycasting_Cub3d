@@ -6,7 +6,7 @@
 #    By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/17 18:05:40 by kyuwonlee         #+#    #+#              #
-#    Updated: 2021/05/26 23:53:21 by kyuwonlee        ###   ########.fr        #
+#    Updated: 2021/05/27 01:50:38 by kyuwonlee        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ ABBR	=	ft_cub3d \
 			ft_read_map \
 			ft_save \
 			ft_sprite \
-			ft_wall
+			ft_wall \
+			ft_read_info_sub
 
 SRCS = $(addsuffix .c, $(addprefix srcs/, $(ABBR)))
 

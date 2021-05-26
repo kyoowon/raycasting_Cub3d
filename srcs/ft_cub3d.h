@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 23:53:39 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 01:50:16 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,12 +197,18 @@ int				event_exit(t_info *info);
 
 void			open_cubfile(char *file_name, t_info *info);
 int				decide_store_info(t_info *info, char **tab);
-void			store_display_resolution(t_info *info, char *w, char *h);
-void			store_texture(t_info *info, char *xpm_path, int flag);
-void			store_color(t_info *info, char *rgb_with_comma, int flag);
+void			store_display_resolution(t_info *info, char **tab);
+void			store_texture(t_info *info, char **tab, int flag);
+void			store_color(t_info *info, char **tab, int flag);
 
 /*
-** ft_read_info.c
+** ft_read_info_sub.c
+*/
+
+void			store_set_color(t_info *info, int hex, int flag);
+
+/*
+** ft_read_map.c
 */
 
 void			read_map(t_info *info, char *line);
