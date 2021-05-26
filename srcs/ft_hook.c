@@ -6,13 +6,13 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:54:56 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 01:42:46 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 23:42:17 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-void	key_update(t_player *player, t_map map, t_key key)
+void	key_update(t_player *player, t_map map, t_key key, t_info *info)
 {
 	if (key.key_w)
 	{
@@ -37,7 +37,7 @@ void	key_update(t_player *player, t_map map, t_key key)
 	if (key.key_a || key.key_ar_l)
 		rotate_player(player, player->r_speed);
 	if (key.key_esc)
-		exit(0);
+		event_exit(info);
 }
 
 int		key_press(int key, t_info *info)
@@ -89,4 +89,17 @@ void	rotate_player(t_player *p, double degree)
 	p->dir_y = olddir_x * sin(degree) + p->dir_y * cos(degree);
 	p->plane_x = p->plane_x * cos(degree) - p->plane_y * sin(degree);
 	p->plane_y = oldplane_x * sin(degree) + p->plane_y * cos(degree);
+}
+
+int		event_exit(t_info *info)
+{
+	ft_frees_nbr(info->buf);
+	ft_frees(info->map.map);
+	free(info->sprite);
+	free(info->s_order);
+	free(info->s_distance);
+	free(info->zbuffer);
+	mlx_destroy_image(info->mlx, info->img.img);
+	mlx_destroy_window(info->mlx, info->win);
+	exit(0);
 }

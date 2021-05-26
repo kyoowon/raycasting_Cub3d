@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 16:06:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 22:17:03 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 23:43:31 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		main_loop(t_info *info)
 {
 	calc_screen(info);
 	draw_window(info);
-	key_update(&info->player, info->map, info->key);
+	key_update(&info->player, info->map, info->key, info);
 	return (0);
 }
 
@@ -102,6 +102,7 @@ int		main(int argc, char *argv[])
 		mlx_loop_hook(info.mlx, &main_loop, &info);
 		mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
 		mlx_hook(info.win, X_EVENT_KEY_RELEASE, 0, &key_release, &info);
+		mlx_hook(info.win, DESTROY_NOTIFY, 1L << 17, &event_exit, &info);
 		mlx_loop(info.mlx);
 	}
 	else if (save == ON)

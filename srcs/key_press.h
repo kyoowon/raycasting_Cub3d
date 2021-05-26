@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/02 15:14:29 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/25 21:04:38 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 23:24:32 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # define X_EVENT_KEY_PRESS	2
 # define X_EVENT_KEY_RELEASE 3
-# define X_EVENT_KEY_EXIT	17
+# define X_EVENT_BUTTON_PRESS 4
+# define X_EVENT_KEY_EXIT 17
 
 # define K_A 0
 # define K_B 11

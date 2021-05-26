@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 22:18:48 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 23:43:34 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define CEILING 6
 # define MAP_INFO -1
 # define PI 3.1415926535897
+# define DESTROY_NOTIFY 17
 
 typedef struct	s_img
 {
@@ -184,10 +185,11 @@ void			init_info(t_info *info);
 ** ft_hook.c
 */
 
-void			key_update(t_player *player, t_map map, t_key key);
+void			key_update(t_player *p, t_map m, t_key k, t_info *info);
 int				key_press(int key, t_info *info);
 int				key_release(int key, t_info *info);
 void			rotate_player(t_player *p, double degree);
+int				event_exit(t_info *info);
 
 /*
 ** ft_read_info.c
