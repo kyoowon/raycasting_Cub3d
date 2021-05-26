@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/27 01:50:16 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 03:36:16 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_CUB3D_H
 
 # include "../mlx/mlx.h"
+# include "../minilibx_custom/mlx_custom.h"
 # include "../libft/libft.h"
 # include "key_press.h"
 # include <math.h>

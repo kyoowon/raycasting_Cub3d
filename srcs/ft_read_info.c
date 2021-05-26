@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 20:36:10 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/27 01:52:53 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 03:35:19 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ int		decide_store_info(t_info *info, char **tab)
 
 void	store_display_resolution(t_info *info, char **tab)
 {
-	char *width;
-	char *height;
+	char	*width;
+	char	*height;
+	int		size_x;
+	int		size_y;
 
 	width = tab[1];
 	height = tab[2];
@@ -81,9 +83,10 @@ void	store_display_resolution(t_info *info, char **tab)
 		ft_strexit("ERROR:Information already exists!");
 	info->width = ft_atoi(width);
 	info->height = ft_atoi(height);
-	info->width = info->width > 1920 ? 1920 : info->width;
+	mlx_get_screen_size(info->mlx, &size_x, &size_y);
+	info->width = info->width > 1920 ? size_x : info->width;
 	info->width = info->width < 848 ? 848 : info->width;
-	info->height = info->height > 1080 ? 1080 : info->height;
+	info->height = info->height > 1080 ? size_y : info->height;
 	info->height = info->height < 480 ? 480 : info->height;
 }
 
