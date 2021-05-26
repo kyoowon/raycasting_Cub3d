@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calc_screen.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:51:12 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 01:37:10 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 07:32:56 by kyulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 void	draw_floor_ceiling(t_info *info)
 {

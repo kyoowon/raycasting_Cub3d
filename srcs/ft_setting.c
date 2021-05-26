@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_setting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:53:33 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/27 00:20:13 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 07:33:23 by kyulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 void	setting_all(t_info *info)
 {
@@ -87,8 +87,9 @@ void	load_image(t_info *info, int *texture, char *path, t_img *img)
 	int		x;
 	int		y;
 
-	img->img = mlx_xpm_file_to_image(info->mlx, path,
-						&img->img_width, &img->img_height);
+	if (!(img->img = mlx_xpm_file_to_image(info->mlx, path,
+						&img->img_width, &img->img_height)))
+		ft_strexit("ERROR:Texture file error");
 	img->data = (int *)mlx_get_data_addr(
 						img->img, &img->bpp, &img->size_l, &img->endian);
 	y = 0;

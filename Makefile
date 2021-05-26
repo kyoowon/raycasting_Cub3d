@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+         #
+#    By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/17 18:05:40 by kyuwonlee         #+#    #+#              #
-#    Updated: 2021/05/27 03:42:32 by kyuwonlee        ###   ########.fr        #
+#    Updated: 2021/05/27 07:36:57 by kyulee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT_A = ./libft/libft.a
 MLX_D = ./mlx
 MLX_A = ./mlx/libmlx.a
 MLX_CUSTOM = ./minilibx_custom
-ABBR	=	ft_cub3d \
+ABBR	=	cub3d \
 			ft_setting \
 			ft_hook \
 			ft_calc_screen \
@@ -32,7 +32,8 @@ ABBR	=	ft_cub3d \
 			ft_save \
 			ft_sprite \
 			ft_wall \
-			ft_read_info_sub
+			ft_read_info_sub \
+			ft_hook_sub
 
 SRCS = $(addsuffix .c, $(addprefix srcs/, $(ABBR)))
 

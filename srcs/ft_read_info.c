@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read_info.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 20:36:10 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/27 03:35:19 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 07:33:12 by kyulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 void	open_cubfile(char *file_name, t_info *info)
 {

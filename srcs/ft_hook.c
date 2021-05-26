@@ -3,40 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hook.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:54:56 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 23:42:17 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 07:33:06 by kyulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
-void	key_update(t_player *player, t_map map, t_key key, t_info *info)
+void	key_update(t_info *info)
 {
-	if (key.key_w)
-	{
-		if (map.map[(int)(player->pos_x + player->dir_x * player->m_speed)]
-				[(int)(player->pos_y)] != '1')
-			player->pos_x += player->dir_x * player->m_speed;
-		if (map.map[(int)(player->pos_x)]
-				[(int)(player->pos_y + player->dir_y * player->m_speed)] != '1')
-			player->pos_y += player->dir_y * player->m_speed;
-	}
-	if (key.key_s)
-	{
-		if (map.map[(int)(player->pos_x - player->dir_x * player->m_speed)]
-				[(int)(player->pos_y)] != '1')
-			player->pos_x -= player->dir_x * player->m_speed;
-		if (map.map[(int)(player->pos_x)]
-				[(int)(player->pos_y - player->dir_y * player->m_speed)] != '1')
-			player->pos_y -= player->dir_y * player->m_speed;
-	}
-	if (key.key_d || key.key_ar_r)
-		rotate_player(player, -player->r_speed);
-	if (key.key_a || key.key_ar_l)
-		rotate_player(player, player->r_speed);
-	if (key.key_esc)
+	if (info->key.key_w)
+		press_key_w(&info->player, info->map);
+	if (info->key.key_s)
+		press_key_s(&info->player, info->map);
+	if (info->key.key_d)
+		press_key_d(&info->player, info->map);
+	if (info->key.key_a)
+		press_key_a(&info->player, info->map);
+	if (info->key.key_ar_r)
+		rotate_player(&info->player, -info->player.r_speed);
+	if (info->key.key_ar_l)
+		rotate_player(&info->player, info->player.r_speed);
+	if (info->key.key_esc)
 		event_exit(info);
 }
 

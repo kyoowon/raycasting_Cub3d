@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_validate_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:49:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 20:48:09 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 07:33:30 by kyulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 int		validate_arguments(int argc, char *option)
 {

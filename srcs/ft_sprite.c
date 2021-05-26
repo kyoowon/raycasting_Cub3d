@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sprite.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 19:05:20 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 01:44:26 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 07:33:25 by kyulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 void	set_malloc_sprite(t_info *info)
 {

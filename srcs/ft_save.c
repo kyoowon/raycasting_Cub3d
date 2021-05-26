@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_save.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kyulee <kyulee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:25:45 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/27 00:13:01 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 07:33:19 by kyulee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_cub3d.h"
+#include "cub3d.h"
 
 void	bitmap_data(t_info *info, int fd)
 {
@@ -97,6 +97,5 @@ void	save_bitmap(t_info *info)
 	free(info->s_order);
 	free(info->s_distance);
 	free(info->zbuffer);
-	mlx_destroy_image(info->mlx, info->img.img);
 	exit(0);
 }
