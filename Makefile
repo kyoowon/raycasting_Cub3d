@@ -6,7 +6,7 @@
 #    By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/17 18:05:40 by kyuwonlee         #+#    #+#              #
-#    Updated: 2021/05/25 22:09:36 by kyuwonlee        ###   ########.fr        #
+#    Updated: 2021/05/26 23:53:21 by kyuwonlee        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ INCLIB = -Lmlx -lmlx -framework OpenGL -framework Appkit -Llibft -lft
 
 LIBFT_D = ./libft
 LIBFT_A = ./libft/libft.a
+MLX_D = ./mlx
+MLX_A = ./mlx/libmlx.a
 
 ABBR	=	ft_cub3d \
 			ft_setting \
@@ -40,6 +42,7 @@ all		: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C $(LIBFT_D)
+	make -C $(MLX_D)
 	$(CC) $(CFLAGS) $(INCS) -o $(NAME) $(OBJS) $(INCLIB)
 
 bonus: fclean $(B_OBJS)
@@ -48,14 +51,15 @@ bonus: fclean $(B_OBJS)
 
 clean:
 	make -C $(LIBFT_D) clean
+	make -C $(MLX_D) clean
 	rm -f $(OBJS) $(B_OBJS) *.bmp
 
 fclean: clean
-	rm -f $(NAME) $(BONUS) $(LIBFT_A)
+	rm -f $(NAME) $(BONUS) $(LIBFT_A) $(MLX_A)
 
 re: fclean all
 
 test: re
-	./$(NAME) cubs/test.cub
+	./$(NAME) cubs/example.cub
 
 .PHONY: bonus all clean fclean bonus re test save

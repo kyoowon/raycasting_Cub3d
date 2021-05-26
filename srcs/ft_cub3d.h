@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 23:43:34 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 23:53:39 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define TEXWIDTH 256
-# define TEXHEIGHT 256
+# define TEXWIDTH 64
+# define TEXHEIGHT 64
 # define UDIV 1
 # define VDIV 1
 # define VMOVE 10.0

@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 16:06:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 23:43:31 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 00:02:04 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	draw_bitmap(t_info *info)
 	int y;
 	int x;
 
-	y = 0;
 	calc_screen(info);
+	y = 0;
 	while (y < info->height)
 	{
 		x = 0;
@@ -106,6 +106,6 @@ int		main(int argc, char *argv[])
 		mlx_loop(info.mlx);
 	}
 	else if (save == ON)
-		save_bitmap(&info);
+		draw_bitmap(&info);
 	return (0);
 }
