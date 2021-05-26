@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:25:45 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 23:51:02 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/27 00:13:01 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void	save_bitmap(t_info *info)
 	bitmap_data(info, fd);
 	ft_putstr("SUCCESS: screenshot.bmp Saved!\n");
 	close(fd);
-	// ft_frees_nbr(info->buf);
-	// ft_frees(info->map.map);
-	// free(info->sprite);
-	// free(info->s_order);
-	// free(info->s_distance);
-	// free(info->zbuffer);
-	// mlx_destroy_image(info->mlx, info->img.img);
+	ft_frees_nbr(info->buf);
+	ft_frees(info->map.map);
+	free(info->sprite);
+	free(info->s_order);
+	free(info->s_distance);
+	free(info->zbuffer);
+	mlx_destroy_image(info->mlx, info->img.img);
 	exit(0);
 }
