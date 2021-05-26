@@ -6,13 +6,13 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:25:45 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/25 22:56:54 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 20:51:36 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-void	bdata(t_info *info, int fd)
+void	bitmap_data(t_info *info, int fd)
 {
 	int				i;
 	int				j;
@@ -36,7 +36,7 @@ void	bdata(t_info *info, int fd)
 	}
 }
 
-void	binfo(t_info *info, int fd)
+void	bitmap_info(t_info *info, int fd)
 {
 	int				n;
 	unsigned char	header[40];
@@ -60,7 +60,7 @@ void	binfo(t_info *info, int fd)
 	write(fd, header, 40);
 }
 
-void	bfile(t_info *info, int fd)
+void	bitmap_file(t_info *info, int fd)
 {
 	int				n;
 	unsigned char	header[14];
@@ -79,17 +79,17 @@ void	bfile(t_info *info, int fd)
 	write(fd, header, 14);
 }
 
-int		bitmap(t_info *info)
+void	save_bitmap(t_info *info)
 {
 	int fd;
 
 	fd = open("screenshot.bmp", O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
 	if (fd == -1)
 		ft_strexit("ERROR: No Such CUB File Available!");
-	bfile(info, fd);
-	binfo(info, fd);
-	bdata(info, fd);
+	bitmap_file(info, fd);
+	bitmap_info(info, fd);
+	bitmap_data(info, fd);
+	ft_putstr("SUCCESS: screenshot.bmp Saved!\n");
 	close(fd);
-	ft_putstr("success screenshot.bmp saved!\n");
 	exit(1);
 }

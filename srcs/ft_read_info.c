@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 20:36:10 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/25 21:01:12 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 22:24:12 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,25 @@ void	open_cubfile(char *file_name, t_info *info)
 	flag = 0;
 	while (get_next_line(info->fd, &line) > 0)
 	{
-		if (line[0] == '\0')
-			continue;
-		tab = ft_split(line, ' ');
-		if (!tab)
-			ft_strexit("ERROR: Split Fail!");
-		flag = decide_what_to_store(info, tab);
-		ft_frees(tab);
-		if (flag == MAP_START)
-			break ;
+		if (line[0] != '\0')
+		{
+			tab = ft_split(line, ' ');
+			if (!tab)
+				ft_strexit("ERROR: Split Fail!");
+			flag = decide_store_info(info, tab);
+			ft_frees(tab);
+			if (flag == MAP_INFO)
+				break ;
+		}
 		free(line);
 	}
 	info->line = line;
 }
 
-int		decide_what_to_store(t_info *info, char **tab)
+int		decide_store_info(t_info *info, char **tab)
 {
 	if (ft_strcmp(tab[0], "R") == 0)
-		store_resolution(info, tab[1], tab[2]);
+		store_display_resolution(info, tab[1], tab[2]);
 	else if (ft_strcmp(tab[0], "NO") == 0)
 		store_texture(info, tab[1], NORTH);
 	else if (ft_strcmp(tab[0], "SO") == 0)
@@ -59,11 +60,11 @@ int		decide_what_to_store(t_info *info, char **tab)
 	else if (ft_strcmp(tab[0], "C") == 0)
 		store_color(info, tab[1], CEILING);
 	else
-		return (MAP_START);
+		return (MAP_INFO);
 	return (0);
 }
 
-void	store_resolution(t_info *info, char *width, char *height)
+void	store_display_resolution(t_info *info, char *width, char *height)
 {
 	if (!width || !height)
 		ft_strexit("ERROR: Missing Resolution Info");
@@ -90,14 +91,14 @@ void	store_texture(t_info *info, char *xpm_path, int flag)
 	info->texture.path[flag] = ft_strdup(xpm_path);
 }
 
-void	store_color(t_info *info, char *rgb_with_comma, int flag)
+void	store_color(t_info *info, char *rgb_color, int flag)
 {
 	char	**rgb;
 	int		hex;
 	int		temp;
 	int		i;
 
-	if (!(rgb = ft_split(rgb_with_comma, ',')))
+	if (!(rgb = ft_split(rgb_color, ',')))
 		ft_strexit("ERROR: Split Fail!");
 	i = 0;
 	hex = 0;

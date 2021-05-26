@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 00:23:25 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 01:51:23 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 22:18:48 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define SPR 4
 # define FLOOR 5
 # define CEILING 6
-# define MAP_START -1
+# define MAP_INFO -1
 # define PI 3.1415926535897
 
 typedef struct	s_img
@@ -177,7 +177,7 @@ typedef struct	s_pair
 
 int				main_loop(t_info *info);
 void			draw_window(t_info *info);
-void			save_bitmap(t_info *info);
+void			draw_bitmap(t_info *info);
 void			init_info(t_info *info);
 
 /*
@@ -194,8 +194,8 @@ void			rotate_player(t_player *p, double degree);
 */
 
 void			open_cubfile(char *file_name, t_info *info);
-int				decide_what_to_store(t_info *info, char **tab);
-void			store_resolution(t_info *info, char *width, char *height);
+int				decide_store_info(t_info *info, char **tab);
+void			store_display_resolution(t_info *info, char *w, char *h);
 void			store_texture(t_info *info, char *xpm_path, int flag);
 void			store_color(t_info *info, char *rgb_with_comma, int flag);
 
@@ -205,17 +205,17 @@ void			store_color(t_info *info, char *rgb_with_comma, int flag);
 
 void			read_map(t_info *info, char *line);
 void			allocate_map(t_info *info, t_list *curr);
-void			store_map_as_array(t_info *info, t_list *curr);
+void			store_map_array(t_info *info, t_list *curr);
 void			create_player(t_info *info, int i, int j);
 
 /*
 ** ft_save.c
 */
 
-void			bdata(t_info *info, int fd);
-void			binfo(t_info *info, int fd);
-void			bfile(t_info *info, int fd);
-int				bitmap(t_info *info);
+void			bitmap_data(t_info *info, int fd);
+void			bitmap_info(t_info *info, int fd);
+void			bitmap_file(t_info *info, int fd);
+void			save_bitmap(t_info *info);
 
 /*
 ** ft_setting.c
@@ -260,10 +260,10 @@ void			draw_sprite(t_info *info, t_svec *svec);
 ** ft_validate_info.c
 */
 
-void			validate_arguments(int argc, char *option, int *save);
+int				validate_arguments(int argc, char *option);
 void			validate_info(t_info *info);
 void			validate_map(t_info *info);
-void			validate_map_horizontal(char **map, int width, int height);
-void			validate_map_vertical(char **map, int width, int height);
+void			map_horizontal(char **map, int width, int height);
+void			map_vertical(char **map, int width, int height);
 
 #endif

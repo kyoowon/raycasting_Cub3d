@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 18:21:50 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 01:42:52 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 21:31:07 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void	read_map(t_info *info, char *line)
 		free(line);
 	}
 	free(line);
+	close(info->fd);
 	allocate_map(info, info->lstmap);
-	store_map_as_array(info, info->lstmap);
+	store_map_array(info, info->lstmap);
 	ft_lstclear(&(info->lstmap), free);
 }
 
@@ -58,7 +59,7 @@ void	allocate_map(t_info *info, t_list *curr)
 	}
 }
 
-void	store_map_as_array(t_info *info, t_list *curr)
+void	store_map_array(t_info *info, t_list *curr)
 {
 	int		i;
 	int		j;

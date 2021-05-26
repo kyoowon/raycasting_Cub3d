@@ -6,24 +6,28 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 16:49:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/25 22:23:24 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 20:48:09 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-void	validate_arguments(int argc, char *option, int *save)
+int		validate_arguments(int argc, char *option)
 {
+	int save;
+
+	save = -1;
 	if (argc > 3)
 		ft_strexit("ERROR: Too Many Arguments Given!");
 	if (argc < 2)
 		ft_strexit("ERROR: Too Few Arguments Given!");
 	if (argc == 2)
-		*save = OFF;
+		save = OFF;
 	else if (ft_strcmp(option, "--save") == 0)
-		*save = ON;
+		save = ON;
 	else
 		ft_strexit("ERROR: Invalid Argument Given!");
+	return (save);
 }
 
 void	validate_info(t_info *info)
@@ -43,11 +47,11 @@ void	validate_map(t_info *info)
 		ft_strexit("ERROR: Invalid Map Parsing");
 	if (info->player.dir == '\0')
 		ft_strexit("ERROR: No Player Position Given!");
-	validate_map_horizontal(info->map.map, info->map.mwidth, info->map.mheight);
-	validate_map_vertical(info->map.map, info->map.mwidth, info->map.mheight);
+	map_horizontal(info->map.map, info->map.mwidth, info->map.mheight);
+	map_vertical(info->map.map, info->map.mwidth, info->map.mheight);
 }
 
-void	validate_map_horizontal(char **map, int width, int height)
+void	map_horizontal(char **map, int width, int height)
 {
 	int	x;
 	int	y;
@@ -75,7 +79,7 @@ void	validate_map_horizontal(char **map, int width, int height)
 	}
 }
 
-void	validate_map_vertical(char **map, int width, int height)
+void	map_vertical(char **map, int width, int height)
 {
 	int	x;
 	int	y;

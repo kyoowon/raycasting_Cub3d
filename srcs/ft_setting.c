@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 13:53:33 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 01:43:35 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 21:08:46 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	setting_all(t_info *info)
 {
-	info->mlx = mlx_init();
 	apply_player_orientation(&info->player);
 	allocate_buffer(info);
 	load_texture(info);

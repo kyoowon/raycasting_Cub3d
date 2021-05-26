@@ -6,7 +6,7 @@
 /*   By: kyuwonlee <kyuwonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 16:06:30 by kyuwonlee         #+#    #+#             */
-/*   Updated: 2021/05/26 01:44:16 by kyuwonlee        ###   ########.fr       */
+/*   Updated: 2021/05/26 22:17:03 by kyuwonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	draw_window(t_info *info)
 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
 }
 
-void	save_bitmap(t_info *info)
+void	draw_bitmap(t_info *info)
 {
 	int y;
 	int x;
@@ -56,11 +56,12 @@ void	save_bitmap(t_info *info)
 		}
 		y++;
 	}
-	bitmap(info);
+	save_bitmap(info);
 }
 
 void	init_info(t_info *info)
 {
+	info->mlx = mlx_init();
 	info->width = 0;
 	info->height = 0;
 	ft_memset(info->texture.path, 0, 6);
@@ -88,7 +89,7 @@ int		main(int argc, char *argv[])
 	t_info	info;
 	int		save;
 
-	validate_arguments(argc, argv[2], &save);
+	save = validate_arguments(argc, argv[2]);
 	init_info(&info);
 	open_cubfile(argv[1], &info);
 	validate_info(&info);
@@ -103,7 +104,7 @@ int		main(int argc, char *argv[])
 		mlx_hook(info.win, X_EVENT_KEY_RELEASE, 0, &key_release, &info);
 		mlx_loop(info.mlx);
 	}
-	else
+	else if (save == ON)
 		save_bitmap(&info);
 	return (0);
 }
